@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import ImageGalleryItem from 'components/ImageGalleryItem';
 import ImageGalleryList from './ImageGallery.style';
 
-function ImageGallery({ images, openModal }) {
+export const ImageGallery = ({ images, openModal }) => {
   return (
     <ImageGalleryList>
       {images.map(({ id, description, smallImage, largeImage }) => (
@@ -16,7 +16,7 @@ function ImageGallery({ images, openModal }) {
       ))}
     </ImageGalleryList>
   );
-}
+};
 
 ImageGallery.prototype = {
   images: PropTypes.arrayOf(

@@ -1,7 +1,7 @@
 import { MdOutlineCameraswitch } from 'react-icons/md';
 import LoaderWrapper from './Loader.style';
 
-function Loader() {
+export const Loader = () => {
   return (
     <LoaderWrapper>
       <MdOutlineCameraswitch
@@ -11,6 +11,6 @@ function Loader() {
       />
     </LoaderWrapper>
   );
-}
+};
 
 export default Loader;

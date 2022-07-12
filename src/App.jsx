@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import fetchImages from './services/images-api';
 import Searchbar from './components/Searchbar/Searchbar';
@@ -123,6 +123,9 @@ export class App extends Component {
         {imagesOnPage >= 12 && imagesOnPage < totalImages && (
           <Button onNextFetch={this.onNextFetch} />
         )}
+
+        {totalImages !== 0 &&
+          toast.success(`We found ${totalImages} pictures for you!`)}
 
         {showModal && (
           <Modal

@@ -5,7 +5,7 @@ export const Header = styled.header`
   align-items: center;
   justify-content: center;
 
-  padding: 50px 0 50px 0;
+  padding: 20px 0 20px 0;
 
   background-image: ${({ theme }) => theme.colors.linearGgradient};
   box-shadow: ${({ theme }) => theme.colors.mainShadow};
