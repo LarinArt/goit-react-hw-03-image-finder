@@ -7,6 +7,14 @@ import ImageGallery from './components/ImageGallery/ImageGallery';
 import Button from './components/Button/Button';
 import Loader from './components/Loader/Loader';
 import Modal from './components/Modal/Modal';
+import * as API from './services/images-api';
+
+const Status = {
+  IDLE: 'idle',
+  PENDING: 'pending',
+  RESOLVED: 'resolved',
+  REJECTED: 'rejected',
+};
 
 export class App extends Component {
   state = {
@@ -20,10 +28,51 @@ export class App extends Component {
     error: null,
     currentImageUrl: null,
     currentImageDescription: null,
+    status: Status.IDLE,
+    totalHits: null,
+    hits: [],
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     const { query, page } = this.state;
+    const { query: prevQuery, page: prevPage } = prevState;
+    if (
+      (prevQuery.trim() !== query.trim() && query.trim().length > 0) ||
+      page > prevPage
+    ) {
+      API.searchParams.q = query;
+      API.searchParams.page = page;
+      this.setState({ status: Status.PENDING });
+      try {
+        const { totalHits, hits } = await API.getImages(API.searchParams);
+        if (totalHits || hits.length) {
+          if (page === 1) {
+            toast.success(`We found ${totalHits} pictures for you!`);
+          }
+          if (page >= 1) {
+            this.setState(prevState => ({
+              totalHits: totalHits,
+              hits: prevState.hits ? [...prevState.hits, ...hits] : hits,
+              status: Status.RESOLVED,
+            }));
+          }
+        }
+      } catch (error) {
+        this.setState({
+          totalHits: null,
+          hits: [],
+          status: Status.REJECTED,
+          error,
+        });
+        toast.error(`${error}`);
+      }
+    }
+    if (prevState.hits !== this.state.hits) {
+      window.scrollBy({
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
 
     if (prevState.query !== query) {
       this.setState(({ isLoading }) => ({ isLoading: !isLoading }));
@@ -123,9 +172,6 @@ export class App extends Component {
         {imagesOnPage >= 12 && imagesOnPage < totalImages && (
           <Button onNextFetch={this.onNextFetch} />
         )}
-
-        {totalImages !== 0 &&
-          toast.success(`We found ${totalImages} pictures for you!`)}
 
         {showModal && (
           <Modal

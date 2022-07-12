@@ -24,7 +24,7 @@ class Searchbar extends Component {
     const { query } = this.state;
 
     if (query.trim() === '') {
-      toast.error('Enter your search query!');
+      toast.info('Please enter your request!');
       return;
     }
 
