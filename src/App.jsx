@@ -84,7 +84,7 @@ export class App extends Component {
         status: Status.REJECTED,
         loading: false,
       });
-      toast('Please enter your request!');
+      toast.warning('Please enter your request!');
     }
     this.setState({
       query,
