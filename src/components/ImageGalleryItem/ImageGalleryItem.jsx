@@ -1,24 +1,23 @@
 import PropTypes from 'prop-types';
 import { Item, Img } from './ImageGalleryItem.style';
 
-export const ImageGalleryItem = ({
-  description,
-  smallImage,
-  largeImage,
-  openModal,
-}) => {
+export const ImageGalleryItem = ({ webformatURL, largeImageURL, onClick }) => {
   return (
-    <Item onClick={openModal}>
-      <Img src={smallImage} alt={description} data-large={largeImage} />
+    <Item>
+      <Img
+        src={webformatURL}
+        data-source={largeImageURL}
+        onClick={onClick}
+        loading="lazy"
+      />
     </Item>
   );
 };
 
-ImageGalleryItem.prototype = {
-  description: PropTypes.string,
-  smallImage: PropTypes.string.isRequired,
-  largeImage: PropTypes.string.isRequired,
-  openModal: PropTypes.func.isRequired,
+ImageGalleryItem.propTypes = {
+  webformatURL: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default ImageGalleryItem;

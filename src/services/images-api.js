@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const FILTER = '&image_type=photo&orientation=horizontal&per_page=12';
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '27450205-8765e518dc84e5655ddf2d669';
 
@@ -29,11 +28,3 @@ export const getImages = async () => {
     toast.error(`${error}`);
   }
 };
-
-export const fetchImages = (query, page = 1) => {
-  return fetch(
-    `${BASE_URL}?q=${query}&page=${page}&key=${API_KEY}${FILTER}`
-  ).then(response => response.json());
-};
-
-export default fetchImages;

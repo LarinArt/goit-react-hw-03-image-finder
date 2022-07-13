@@ -10,6 +10,7 @@ export const Header = styled.header`
   background-image: ${({ theme }) => theme.colors.linearGgradient};
   box-shadow: ${({ theme }) => theme.colors.mainShadow};
 `;
+
 export const Form = styled.form`
   display: flex;
   align-items: center;
